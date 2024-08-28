@@ -29,21 +29,20 @@ namespace Runtime.Controllers.NPC
             var spawnTransform = NPCSignals.Instance.onSendSpawnPosToNPC?.Invoke(NPCTypes.Enemy);
             var randomTransform = spawnTransform[Random.Range(0, spawnTransform.Count)];
             navMeshAgent.Warp(randomTransform.position);
-            Move();
             
             
-            
-        }
-
-        public void Move()
-        {
             var walkTransform = NPCSignals.Instance.onSendWalkTransformToNpc?.Invoke(NPCTypes.Enemy);
-            var randomTransform =
+            var randomPos =
                 Random.Range(walkTransform[0].transform.localPosition.x, walkTransform[1].transform.localPosition.x);
-            navMeshAgent.SetDestination(new Vector3(randomTransform, transform.position.y, walkTransform[0].localPosition.z));
-
-          
+            var walkPos = new Vector3(randomPos, transform.position.y, walkTransform[0].transform.localPosition.z);
             
+            Move(walkPos);
         }
+
+        public void Move(Vector3 targetPosition)
+        {
+            navMeshAgent.SetDestination(targetPosition);
+        }
+        
     }
 }

@@ -5,11 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - Gun
   - PutBullet
   - BuyBullet
-  - BaseLimit
-  - BuildArea
+  - Turret
+  - Enemy
+  - EnemyRadar
+  - BaseIn
+  - Door
+  - BaseOut
   layers:
   - Default
   - TransparentFX

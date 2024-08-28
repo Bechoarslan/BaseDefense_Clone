@@ -22,3 +22,8 @@ MonoBehaviour:
     - {x: 0.3, y: 0, z: -0.3}
     - {x: -0.3, y: 0, z: -0.3}
     - {x: -0.3, y: 0, z: 0.3}
+    GunDatas:
+    - gunType: 0
+      GunMeshes: {fileID: 6908739434531237095, guid: 7a1d13925b6590f4f9b6fad7fa9cb71f, type: 3}
+    - gunType: 1
+      GunMeshes: {fileID: 1659898151575521214, guid: 579a45d28287c05408dae28f02a4dfd4, type: 3}

@@ -15,6 +15,7 @@ namespace Runtime.Managers
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerStackController playerStackController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
+        [SerializeField] private PlayerGunController playerGunController;
 
 
         #endregion
@@ -22,6 +23,7 @@ namespace Runtime.Managers
         #region Private Variables
         
         private CD_PlayerData _playerData;
+        private bool _isPlayerInSafeArea;
 
         #endregion
 
@@ -40,6 +42,7 @@ namespace Runtime.Managers
         {
             playerMovementController.GetPlayerData(_playerData);
             playerStackController.GetPlayerData(_playerData);
+            playerGunController.GetPlayerData(_playerData);
         }
 
         private CD_PlayerData GetPlayerData() => Resources.Load<CD_PlayerData>("Data/CD_PlayerData");
@@ -60,8 +63,14 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onChangePlayerMovementState += playerMovementController.OnChangePlayerMovementState;
             PlayerSignals.Instance.onSendAnimationSpeed += playerAnimationController.OnSendAnimationSpeed;
             PlayerSignals.Instance.onSetBoolAnimation += playerAnimationController.OnSetBoolAnimation;
+            PlayerSignals.Instance.onIsPlayerInSafeArea += OnIsPlayerInSafeArea;
         }
-        
+
+        private void OnIsPlayerInSafeArea(bool condition)
+        {
+            playerAnimationController.OnChangeLayer(condition);
+        }
+
         private void UnsubscribeEvents()
         {
             InputSignals.Instance.onSendInputParams -= playerMovementController.OnMovement;

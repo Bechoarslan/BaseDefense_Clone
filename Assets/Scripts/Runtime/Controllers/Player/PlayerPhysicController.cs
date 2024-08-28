@@ -1,4 +1,6 @@
 ﻿using System;
+using DG.Tweening;
+using Runtime.Abstract;
 using Runtime.Enums.Player;
 using Runtime.Signals;
 using UnityEngine;
@@ -17,7 +19,7 @@ namespace Runtime.Controllers.Player
 
         #region Private Variables
 
-        
+        private bool _baseIn;
 
         #endregion
 
@@ -36,12 +38,30 @@ namespace Runtime.Controllers.Player
                 PlayerSignals.Instance.onPlayerInteractedWithPutBulletArea?.Invoke(other.gameObject.transform);
             }
 
-            if (other.gameObject.CompareTag("Gun"))
+            if (other.gameObject.CompareTag("Turret"))
             {
                 PlayerSignals.Instance.onChangePlayerMovementState?.Invoke(PlayerMovementState.Turret);
                 PlayerSignals.Instance.onPlayerInteractedWithGunArea?.Invoke(other.gameObject.transform);
-                
             }
+
+            if (other.gameObject.CompareTag("Door"))
+            {
+
+                var door = other.gameObject.transform.GetChild(0);
+                door.transform.DOLocalRotate(new Vector3(0, 0, 90), 1);
+            }
+
+            if (other.gameObject.CompareTag("BaseOut"))
+            {
+                PlayerSignals.Instance.onIsPlayerInSafeArea?.Invoke(false);
+            }
+
+            if (other.gameObject.CompareTag("BaseIn"))
+            {
+                PlayerSignals.Instance.onIsPlayerInSafeArea?.Invoke(true);
+            }
+            
+            
 
             
         }
@@ -51,6 +71,22 @@ namespace Runtime.Controllers.Player
             if (other.gameObject.CompareTag("PutBullet"))
             {
                 PlayerSignals.Instance.onPlayerExitFromPutBulletArea?.Invoke();
+            }
+
+            if (other.gameObject.CompareTag("Door"))
+            {
+                var door = other.gameObject.transform.GetChild(0);
+                door.transform.DOLocalRotate(new Vector3(0, 0, 0), 1);
+            }
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.gameObject.CompareTag("EnemyRadar"))
+            {
+                other.gameObject.transform.parent.GetComponent<IStateMachine>()
+                    .Move(gameObject.transform.parent.transform.position);
+               
             }
         }
     }

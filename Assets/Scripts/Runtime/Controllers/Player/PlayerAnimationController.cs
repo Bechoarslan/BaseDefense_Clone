@@ -32,5 +32,10 @@ namespace Runtime.Controllers.Player
         {
             playerAnimator.SetBool(state.ToString(),condition);
         }
+
+        public void OnChangeLayer(bool condition)
+        {
+            playerAnimator.SetLayerWeight(1, !condition ? 1 : 0);
+        }
     }
 }

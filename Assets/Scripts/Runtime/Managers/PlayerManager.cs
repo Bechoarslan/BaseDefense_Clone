@@ -23,7 +23,7 @@ namespace Runtime.Managers
         #region Private Variables
         
         private CD_PlayerData _playerData;
-        private bool _isPlayerInSafeArea;
+        private bool _isPlayerInSafeArea = true;
 
         #endregion
 
@@ -64,11 +64,19 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onSendAnimationSpeed += playerAnimationController.OnSendAnimationSpeed;
             PlayerSignals.Instance.onSetBoolAnimation += playerAnimationController.OnSetBoolAnimation;
             PlayerSignals.Instance.onIsPlayerInSafeArea += OnIsPlayerInSafeArea;
+            PlayerSignals.Instance.onCheckIsPlayerInSafeArea += CheckIsPlayerInSafeArea;
+        }
+
+        private bool CheckIsPlayerInSafeArea()
+        {
+            return _isPlayerInSafeArea;
         }
 
         private void OnIsPlayerInSafeArea(bool condition)
         {
+            _isPlayerInSafeArea = condition;
             playerAnimationController.OnChangeLayer(condition);
+            playerGunController.OnChangeGunActive(condition);
         }
 
         private void UnsubscribeEvents()
@@ -81,6 +89,8 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onChangePlayerMovementState -= playerMovementController.OnChangePlayerMovementState;
             PlayerSignals.Instance.onSendAnimationSpeed -= playerAnimationController.OnSendAnimationSpeed;
             PlayerSignals.Instance.onSetBoolAnimation -= playerAnimationController.OnSetBoolAnimation;
+            PlayerSignals.Instance.onIsPlayerInSafeArea -= OnIsPlayerInSafeArea;
+            PlayerSignals.Instance.onCheckIsPlayerInSafeArea -= CheckIsPlayerInSafeArea;
         }
         
         private void OnDisable()

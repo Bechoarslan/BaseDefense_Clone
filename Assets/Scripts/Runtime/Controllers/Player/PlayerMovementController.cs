@@ -83,7 +83,7 @@ namespace Runtime.Controllers.Player
             transform.position = newPosPlayer;
             var targetRotation = Quaternion.Euler(0, _movementParams.x * 40, 0);
             _turretObj.rotation = Quaternion.Slerp(_turretObj.rotation, targetRotation, _playerData.RotateSpeed);
-            transform.rotation = Quaternion.LookRotation(_turretObj.rotation * Vector3.forward);
+            transform.rotation = Quaternion.LookRotation(_turretObj.rotation * -Vector3.forward);
         }
 
         private void PlayerMove()
@@ -91,7 +91,7 @@ namespace Runtime.Controllers.Player
             if (_movementParams.magnitude > 0.1f)
             {
                 _movementParams.Normalize();
-                var direction = Vector3.forward * _movementParams.y + Vector3.right * _movementParams.x;
+                var direction = -(Vector3.forward * _movementParams.y + Vector3.right * _movementParams.x);
 
                 playerRb.velocity = direction * _playerData.MoveSpeed;
                 Quaternion targetRotation = Quaternion.LookRotation(direction);

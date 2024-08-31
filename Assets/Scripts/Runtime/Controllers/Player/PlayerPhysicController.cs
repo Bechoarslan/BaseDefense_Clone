@@ -1,9 +1,12 @@
 ﻿using System;
 using DG.Tweening;
 using Runtime.Abstract;
+using Runtime.Enums;
+using Runtime.Enums.NPC;
 using Runtime.Enums.Player;
 using Runtime.Signals;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Controllers.Player
 {
@@ -19,7 +22,7 @@ namespace Runtime.Controllers.Player
 
         #region Private Variables
 
-        private bool _baseIn;
+       [SerializeField] private bool _isPlayerInSafeArea = true;
 
         #endregion
 
@@ -53,11 +56,13 @@ namespace Runtime.Controllers.Player
 
             if (other.gameObject.CompareTag("BaseOut"))
             {
+                _isPlayerInSafeArea = false;
                 PlayerSignals.Instance.onIsPlayerInSafeArea?.Invoke(false);
             }
 
             if (other.gameObject.CompareTag("BaseIn"))
             {
+                _isPlayerInSafeArea = true;
                 PlayerSignals.Instance.onIsPlayerInSafeArea?.Invoke(true);
             }
             
@@ -80,14 +85,6 @@ namespace Runtime.Controllers.Player
             }
         }
 
-        private void OnTriggerStay(Collider other)
-        {
-            if (other.gameObject.CompareTag("EnemyRadar"))
-            {
-                other.gameObject.transform.parent.GetComponent<IStateMachine>()
-                    .Move(gameObject.transform.parent.transform.position);
-               
-            }
-        }
+        
     }
 }

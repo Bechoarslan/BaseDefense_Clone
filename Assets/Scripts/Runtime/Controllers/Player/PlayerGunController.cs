@@ -1,5 +1,6 @@
 ﻿using Runtime.Data.UnityObject;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Controllers.Player
 {
@@ -9,7 +10,8 @@ namespace Runtime.Controllers.Player
 
         #region Serialized Variables
 
-        [SerializeField] private GameObject gunObject;
+       [SerializeField] private GameObject gunObjectMesh;
+       [SerializeField] private GameObject gunObject;
 
         #endregion
 
@@ -26,6 +28,11 @@ namespace Runtime.Controllers.Player
         public void GetPlayerData(CD_PlayerData playerData)
         {
             _playerData = playerData;
+        }
+
+        public void OnChangeGunActive(bool condition)
+        {
+            gunObject.SetActive(!condition);
         }
     }
 }

@@ -4,6 +4,7 @@ using Runtime.Enums.UI;
 using Runtime.Keys;
 using Runtime.Signals;
 using UnityEngine;
+using UnityEngine.Events;
 using Vector2 = System.Numerics.Vector2;
 
 namespace Runtime.Managers
@@ -22,18 +23,10 @@ namespace Runtime.Managers
         #region Private Variables
 
         private FloatingJoystick _joystick;
-        private PlayerMovementState _playerMovementState;
-
         #endregion
 
         #endregion
-
-        private void Awake()
-        {
-            _joystick = FindObjectOfType<FloatingJoystick>();
-            Debug.LogWarning(_joystick);
-        }
-
+        
         private void OnEnable()
         {
             SubscribeEvents();
@@ -43,7 +36,14 @@ namespace Runtime.Managers
         {
             CoreUISignals.Instance.onOpenPanel += OnOpenPanel;
             InputSignals.Instance.onChangeVisibilityOfJoustick += OnChangeVisibilityOfJoustick;
+            CoreGameSignals.Instance.onSpawnNpcs += OnSpawnNpcs;
         }
+
+        private void OnSpawnNpcs()
+        {
+            _joystick = FindObjectOfType<FloatingJoystick>();
+        }
+
 
         private void OnChangeVisibilityOfJoustick(bool condition)
         {
@@ -52,15 +52,13 @@ namespace Runtime.Managers
         
         private void OnOpenPanel(UIPanelTypes panelType)
         {
-            Debug.LogWarning("<color=blue>Executed OnOpenPanel in InputManagers</color>");
-            if (panelType == UIPanelTypes.GamePanel)
+            
+            if (panelType == UIPanelTypes.StartPanel)
             {
-                _joystick = FindObjectOfType<FloatingJoystick>();
-            }
-            else
-            {
+
                 _joystick = null;
             }
+           
         }
         
 

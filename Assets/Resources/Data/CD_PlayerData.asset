@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CD_PlayerData
   m_EditorClassIdentifier: 
   Data:
-    MoveSpeed: 8
+    MoveSpeed: 6
     RotateSpeed: 2
     BulletMaxCount: 10
     MoneyMaxCount: 0

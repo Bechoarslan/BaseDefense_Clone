@@ -49,7 +49,7 @@ namespace Runtime.Managers
         private IEnumerator StartLoadingLevel()
         {
             var result = Addressables.LoadAssetAsync<GameObject>
-                ("Assets/AddresableAssets/Levels/Level1.prefab");
+                ("Prefabs/Level/Level0");
             yield return result;
             if (result.Status == AsyncOperationStatus.Succeeded)
             {
@@ -57,6 +57,7 @@ namespace Runtime.Managers
                 Instantiate(result.Result, Vector3.zero, Quaternion.identity,levelHolder);
                 CoreUISignals.Instance.onClosePanel?.Invoke(UIPanelTypes.StartPanel);
                 CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.GamePanel);
+                CoreGameSignals.Instance.onSpawnNpcs?.Invoke();
             }
             else
             {

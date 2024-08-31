@@ -1,4 +1,5 @@
-﻿using Runtime.Enums.Player;
+﻿using System;
+using Runtime.Enums.Player;
 using Runtime.Extentions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +17,7 @@ namespace Runtime.Signals
         public UnityAction<float> onSendAnimationSpeed = delegate { };
         public UnityAction<PlayerAnimationEnum,bool> onSetBoolAnimation = delegate { };
         public UnityAction<bool> onIsPlayerInSafeArea = delegate { };
+        public Func<bool> onCheckIsPlayerInSafeArea = delegate { return false; };
         
     }
 }

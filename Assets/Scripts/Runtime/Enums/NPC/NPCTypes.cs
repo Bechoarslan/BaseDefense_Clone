@@ -1,4 +1,4 @@
-﻿namespace Runtime.Enums
+﻿namespace Runtime.Enums.NPC
 {
     public enum NPCTypes
     {

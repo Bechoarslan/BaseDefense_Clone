@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Runtime.Abstract;
+using Runtime.Controllers.NPC;
+using Runtime.Controllers.NPC.Enemy;
 using Runtime.Enums;
 using Runtime.Enums.NPC;
 using Runtime.Enums.Player;
@@ -16,13 +20,14 @@ namespace Runtime.Controllers.Player
 
         #region Serialized Variables
 
-        
+        [SerializeField] private Collider playerCollider;
 
         #endregion
 
         #region Private Variables
-
-       [SerializeField] private bool _isPlayerInSafeArea = true;
+        
+        [SerializeField]private List<GameObject> enemyThatCollided = new List<GameObject>();
+        [SerializeField] private bool _isPlayerInSafeArea = true;
 
         #endregion
 
@@ -64,11 +69,37 @@ namespace Runtime.Controllers.Player
             {
                 _isPlayerInSafeArea = true;
                 PlayerSignals.Instance.onIsPlayerInSafeArea?.Invoke(true);
+                foreach (var enemy in enemyThatCollided)
+                {
+                    enemy.GetComponent<IStateMachine>().ChangeState(EnemyAnimationState.Idle);
+                    DOVirtual.DelayedCall(1.5F, () =>
+                    {
+                        enemy.GetComponent<IStateMachine>().ChangeState(EnemyAnimationState.Walk);
+                        enemyThatCollided.Remove(enemy);
+                    });
+                }
+
+                
+                
             }
-            
+
+
+          
             
 
             
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.gameObject.CompareTag("EnemyRadar"))
+            {
+                if (_isPlayerInSafeArea) return;
+                other.gameObject.transform.parent.GetComponent<EnemyController>().ChangeState(EnemyStateType.Run);
+                if(enemyThatCollided.Contains(other.gameObject.transform.parent.gameObject)) return;
+                enemyThatCollided.Add(other.gameObject.transform.parent.gameObject);
+                
+            }
         }
 
         private void OnTriggerExit(Collider other)
@@ -80,9 +111,11 @@ namespace Runtime.Controllers.Player
 
             if (other.gameObject.CompareTag("Door"))
             {
+               
                 var door = other.gameObject.transform.GetChild(0);
                 door.transform.DOLocalRotate(new Vector3(0, 0, 0), 1);
             }
+            
         }
 
         

@@ -10,6 +10,7 @@ namespace Runtime.Signals
     public class NPCSignals : MonoSingleton<NPCSignals>
     {
         public Func<NPCTypes,List<Transform>> onSendWalkTransformToNpc  = delegate { return null; };
+        public Func<Vector3> onSendFirstWalkPointTOEnemy = delegate { return Vector3.zero; }; 
 
     }
 }

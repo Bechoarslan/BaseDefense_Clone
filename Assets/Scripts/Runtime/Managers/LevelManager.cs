@@ -53,11 +53,14 @@ namespace Runtime.Managers
             yield return result;
             if (result.Status == AsyncOperationStatus.Succeeded)
             {
-                Debug.LogWarning("<color=green>The Level is Ready to Load</color>");
                 Instantiate(result.Result, Vector3.zero, Quaternion.identity,levelHolder);
                 CoreUISignals.Instance.onClosePanel?.Invoke(UIPanelTypes.StartPanel);
                 CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.GamePanel);
-                CoreGameSignals.Instance.onSpawnNpcs?.Invoke();
+                InputSignals.Instance.onInputFindJoystick?.Invoke(true);
+                Debug.LogWarning("<color=green>The Level is Ready to Load</color>");
+              
+                
+                
             }
             else
             {

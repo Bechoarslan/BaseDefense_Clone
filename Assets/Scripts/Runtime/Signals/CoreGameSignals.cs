@@ -9,6 +9,6 @@ namespace Runtime.Signals
         
         public UnityAction onStopTurretFire = delegate { };
         public UnityAction onStartTurretFire = delegate { };
-        public UnityAction onSpawnNpcs = delegate { };
+        
     }
 }

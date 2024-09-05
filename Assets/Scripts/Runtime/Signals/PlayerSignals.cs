@@ -17,7 +17,7 @@ namespace Runtime.Signals
         public UnityAction<float> onSendAnimationSpeed = delegate { };
         public UnityAction<PlayerAnimationEnum,bool> onSetBoolAnimation = delegate { };
         public UnityAction<bool> onIsPlayerInSafeArea = delegate { };
-        public Func<bool> onCheckIsPlayerInSafeArea = delegate { return false; };
+        public Func<Transform> onSendPlayerTransform = delegate { return null; };
         
     }
 }

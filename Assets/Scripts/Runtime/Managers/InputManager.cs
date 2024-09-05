@@ -34,14 +34,14 @@ namespace Runtime.Managers
 
         private void SubscribeEvents()
         {
-            CoreUISignals.Instance.onOpenPanel += OnOpenPanel;
+           
             InputSignals.Instance.onChangeVisibilityOfJoustick += OnChangeVisibilityOfJoustick;
-            CoreGameSignals.Instance.onSpawnNpcs += OnSpawnNpcs;
+            InputSignals.Instance.onInputFindJoystick += OnFindJoystick;
         }
 
-        private void OnSpawnNpcs()
+        private void OnFindJoystick(bool condition)
         {
-            _joystick = FindObjectOfType<FloatingJoystick>();
+            _joystick = condition ? FindObjectOfType<FloatingJoystick>() : null;
         }
 
 
@@ -50,21 +50,11 @@ namespace Runtime.Managers
             _joystick.transform.GetChild(0).gameObject.SetActive(condition);
         }
         
-        private void OnOpenPanel(UIPanelTypes panelType)
-        {
-            
-            if (panelType == UIPanelTypes.StartPanel)
-            {
-
-                _joystick = null;
-            }
-           
-        }
-        
+       
 
         private void UnSubscribeEvents()
         {
-            CoreUISignals.Instance.onOpenPanel -= OnOpenPanel;
+            InputSignals.Instance.onInputFindJoystick -= OnFindJoystick;
             InputSignals.Instance.onChangeVisibilityOfJoustick -= OnChangeVisibilityOfJoustick;
         }
 

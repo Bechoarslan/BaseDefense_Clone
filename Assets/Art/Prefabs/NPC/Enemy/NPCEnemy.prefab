@@ -713,6 +713,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4953762969874396331}
   - component: {fileID: 1312662263548456175}
+  - component: {fileID: 5894752034022901572}
   m_Layer: 0
   m_Name: EnemyRadar
   m_TagString: EnemyRadar
@@ -754,10 +755,22 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10.63
+  m_Radius: 8
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5894752034022901572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4137817622792676619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abdbf848a8642e1a8078058d7272c8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4154793584981208130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,7 +1508,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4896011304857883305
 Transform:
   m_ObjectHideFlags: 0

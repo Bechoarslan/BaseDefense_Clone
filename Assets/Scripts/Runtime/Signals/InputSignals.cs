@@ -8,5 +8,6 @@ namespace Runtime.Signals
     {
         public UnityAction<InputParams> onSendInputParams;
        public UnityAction<bool> onChangeVisibilityOfJoustick = delegate { };
+       public UnityAction<bool> onInputFindJoystick = delegate { };
     }
 }

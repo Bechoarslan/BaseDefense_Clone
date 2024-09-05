@@ -1,8 +1,10 @@
 ﻿namespace Runtime.Enums.NPC
 {
-    public enum NPCAnimType
+    public enum EnemyAnimationState
     {
         Walk,
         Idle,
+        Run,
+        Attack
     }
 }

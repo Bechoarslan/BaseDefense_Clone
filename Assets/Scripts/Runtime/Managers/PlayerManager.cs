@@ -64,13 +64,14 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onSendAnimationSpeed += playerAnimationController.OnSendAnimationSpeed;
             PlayerSignals.Instance.onSetBoolAnimation += playerAnimationController.OnSetBoolAnimation;
             PlayerSignals.Instance.onIsPlayerInSafeArea += OnIsPlayerInSafeArea;
-            PlayerSignals.Instance.onCheckIsPlayerInSafeArea += CheckIsPlayerInSafeArea;
+            PlayerSignals.Instance.onSendPlayerTransform += OnSendPlayerTransform;
         }
 
-        private bool CheckIsPlayerInSafeArea()
+        private Transform OnSendPlayerTransform()
         {
-            return _isPlayerInSafeArea;
+            return transform;
         }
+
 
         private void OnIsPlayerInSafeArea(bool condition)
         {
@@ -90,7 +91,8 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onSendAnimationSpeed -= playerAnimationController.OnSendAnimationSpeed;
             PlayerSignals.Instance.onSetBoolAnimation -= playerAnimationController.OnSetBoolAnimation;
             PlayerSignals.Instance.onIsPlayerInSafeArea -= OnIsPlayerInSafeArea;
-            PlayerSignals.Instance.onCheckIsPlayerInSafeArea -= CheckIsPlayerInSafeArea;
+            PlayerSignals.Instance.onSendPlayerTransform -= OnSendPlayerTransform;
+          
         }
         
         private void OnDisable()

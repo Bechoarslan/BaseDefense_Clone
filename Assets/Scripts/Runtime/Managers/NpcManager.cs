@@ -47,7 +47,15 @@ namespace Runtime.Managers
         private void SubscribeEvents()
         {
             NPCSignals.Instance.onSendWalkTransformToNpc += OnSendWalkTransformOfNpc;
-            CoreGameSignals.Instance.onSpawnNpcs += OnSpawnNpcs;
+            NPCSignals.Instance.onSendFirstWalkPointTOEnemy += OnSendFirstWalkPointToEnemy;
+        }
+
+        private Vector3 OnSendFirstWalkPointToEnemy()
+        {
+            var enemyMoveTransform = npcTransforms[(int)NPCTypes.Enemy].walkTransforms[Random.Range(0, npcTransforms[(int)NPCTypes.Enemy].walkTransforms.Count)];
+            var randomPosForX = Random.Range(enemyMoveTransform.GetChild(0).position.x, enemyMoveTransform.GetChild(1).position.x);
+            var enemyMovePos = new Vector3(randomPosForX, 0,0);
+            return enemyMovePos;
         }
 
         private void OnSpawnNpcs()
@@ -59,7 +67,7 @@ namespace Runtime.Managers
         private IEnumerator SpawnEnemyNpcs()
         {
             Debug.LogWarning("Started to Spawn Enemies");
-            yield return new WaitForSeconds(_npcData.enemySpawnTime);
+            
             var enemyObj = PoolSignals.Instance.onGetPoolObject?.Invoke(_npcData.enemySpawnCount,PoolTypes.Enemy,transform);
             foreach (var enemy in enemyObj)
             {
@@ -67,8 +75,9 @@ namespace Runtime.Managers
                 var newPos = new Vector3(randomTransform.localPosition.x, enemy.transform.position.y, randomTransform.localPosition.z);
                 enemy.transform.localPosition = newPos;
                 enemy.SetActive(true);
+                
             }
-            
+            yield return new WaitForSeconds(_npcData.enemySpawnTime);
         }
 
         private List<Transform> OnSendWalkTransformOfNpc(NPCTypes type)
@@ -81,6 +90,7 @@ namespace Runtime.Managers
         private void UnSubscribeEvents()
         {
             NPCSignals.Instance.onSendWalkTransformToNpc -= OnSendWalkTransformOfNpc;
+            NPCSignals.Instance.onSendFirstWalkPointTOEnemy -= OnSendFirstWalkPointToEnemy;
         }
 
         private void OnDisable()
